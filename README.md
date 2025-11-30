@@ -58,7 +58,7 @@ The plan is designed to be modular and incremental. Each part builds on the last
 
 ### Detailed Notebook Content
 
-### **Part 0: Introdcution and Setup**
+### **Part 0: Introduction and Setup**
 *Get Started.*
 
 #### `00_Introduction_and_Setup.ipynb`
@@ -69,6 +69,15 @@ The plan is designed to be modular and incremental. Each part builds on the last
     *   Instructions for setting up the environment: NVIDIA drivers, CUDA, `conda`/`venv`.
     *   How to install core libraries (`transformers`, `torch`, `accelerate`, `bitsandbytes`).
     *   Setting up Hugging Face Hub credentials.
+ 
+#### `00b_Data_Curation_and_Formatting.ipynb`
+*   **Objective:** Data Curation & Formatting.
+*   **Content:**
+    *  Sourcing Data: Show how to scrape a website, process a PDF, or use an API to get raw text.
+    *  Cleaning Data: Demonstrate basic text cleaning (removing HTML tags, normalizing whitespace).
+    *  Creating Instructions: Show how to take raw text and convert it into high-quality instruction-following data (e.g., using a stronger LLM like GPT-4 to generate questions and answers from a document).
+    *  Formatting: Explicitly show how to convert a Python list of dictionaries into the specific ChatML or Alpaca format required by the trainers.
+    *  Creating Preference Data: Show how to synthesize a preference dataset for DPO, perhaps by generating two different responses with a model and using a stronger model to label the "chosen" one.
 
 ---
 
@@ -80,13 +89,23 @@ The plan is designed to be modular and incremental. Each part builds on the last
 *   **Key Concepts:** LoRA, PEFT, `SFTTrainer`, ChatML/Instruction formatting.
 *   **Steps:**
     1.  Load a dataset (e.g., `mlabonne/guanaco-llama2-1k`).
-    2.  Format the dataset into a consistent prompt structure.
-    3.  Load a base model and tokenizer in 4-bit using `bitsandbytes`.
-    4.  Define a `LoraConfig` from PEFT. Explain parameters like `r`, `lora_alpha`, `target_modules`.
-    5.  Instantiate the `SFTTrainer` from TRL.
-    6.  Run the training.
-    7.  Perform inference with the adapter.
-    8.  **Crucially:** Merge the LoRA adapter with the base model and save the final, merged model.
+    2.  Introduce Weights & Biases (W&B) and Show the simple one-line integration (report_to="wandb" in TrainingArguments).
+    3.  Format the dataset into a consistent prompt structure.
+    4.  Load a base model and tokenizer in 4-bit using `bitsandbytes`.
+    5.  Define a `LoraConfig` from PEFT. Explain parameters like `r`, `lora_alpha`, `target_modules`.
+    6.  Instantiate the `SFTTrainer` from TRL.
+    7.  Run the training.
+    8.  Perform inference with the adapter.
+    9.  **Crucially:** Merge the LoRA adapter with the base model and save the final, merged model.
+
+#### `01b_SFT_for_Structured_Output_JSON.ipynb`
+*   **Objective:** A huge number of real-world use cases aren't about chat; they're about getting reliable JSON or structured output.
+*   **Key Concepts:** Full finetuning vs. LoRA, resource requirements (VRAM, time).
+*   **Steps:**
+    1.  Explain the importance of structured output.
+    2.  Show how to create a dataset where the "assistant" response is always a valid JSON object.
+    3.  Finetune a model on this data.
+    4.  At inference time, show how to use techniques like JSON mode in vLLM or other libraries to guarantee valid JSON output.
 
 #### `02_Full_Parameter_SFT_with_TRL.ipynb`
 *   **Objective:** Understand the trade-offs of full finetuning.
@@ -235,10 +254,16 @@ The plan is designed to be modular and incremental. Each part builds on the last
 *   **Objective:** Evaluate your models on standard academic benchmarks.
 *   **Key Concepts:** MMLU, Arc, HellaSwag, TruthfulQA, evaluation metrics.
 *   **Steps:**
-    1.  Introduce the `lm-evaluation-harness` library.
-    2.  Run an evaluation on the *base model* to get a baseline score.
-    3.  Run the same evaluation on your SFT model and your DPO model.
-    4.  Compare the scores and discuss how different finetuning stages affect different benchmarks.
+    *   Part A: Automatic Evaluations
+       1.  Introduce the `lm-evaluation-harness` library.
+       2.  Run an evaluation on the *base model* to get a baseline score.
+       3.  Run the same evaluation on your SFT model and your DPO model.
+       4.  Compare the scores and discuss how different finetuning stages affect different benchmarks.
+    *   Part B: LLM-as-a-Judge:
+       1.   Introduce the concept of using a powerful model (like GPT-4 or Claude 3) to evaluate your finetuned model's outputs on open-ended questions.
+       2.   Show how to set up a prompt that asks the judge to rate a response on a scale of 1-10 for helpfulness, accuracy, etc.
+    *   Part C: Domain-Specific Evaluation:
+       1.   Create a small, custom evaluation set for the task you finetuned for (e.g., 20 examples for your JSON task) and measure the exact match accuracy.
 
 ---
 
@@ -266,3 +291,20 @@ The plan is designed to be modular and incremental. Each part builds on the last
         *   **Stage 1:** Freeze the vision encoder and LLM, and train only the projector module.
         *   **Stage 2:** Unfreeze the LLM (or apply LoRA) and do an end-to-end SFT on vision-language instructions.
     4.  Use a library like LLaVA's official repo or a TRL example for VLM finetuning.
+ 
+#### `18_Merging_LoRA_Adapters.ipynb`
+*   **Objective:** Managing dozens of LoRA adapters is inefficient. What if you could combine them?
+*   **Steps:**
+     1. Introduce the concept of merging adapters to create a single, multi-skilled model without full retraining.
+     2. Finetune two different LoRAs on the same base model (e.g., one for Python coding, one for writing SQL).
+     3. Use a library like mergekit to perform various merge techniques (e.g., TIES-Merging, SLERP).
+     4. Evaluate the resulting model to see if it retains both skills.
+ 
+### **Appendix**
+#### `Debugging.md`
+*   **Objective:** A living document covering:
+*   **Content:**
+   *   CUDA Out of Memory: Explain what causes it (batch size, model size, sequence length) and the solutions (gradient accumulation, 4/8-bit quantization, LoRA, DeepSpeed/FSDP, Unsloth).
+   *   Loss goes to NaN (Not a Number): Explain causes (unstable learning rate, bad data, gradient explosion) and solutions (learning rate schedulers, gradient clipping, data cleaning).
+   *   Model "Forgets" or Performance Degrades: Discuss catastrophic forgetting and how techniques like LoRA or lower learning rates can mitigate it.
+   *   Slow Training: Tips for profiling and identifying bottlenecks (I/O, CPU, etc.).
