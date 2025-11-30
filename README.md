@@ -17,34 +17,34 @@ The plan is designed to be modular and incremental. Each part builds on the last
 ```
 /llm-finetuning-cookbook
 |-- Part_0_Introduction_and_Setup
-|   |-- 00_Introduction_and_Setup.ipynb
-|   |-- 00b_Data_Curation_and_Formatting.ipynb
+|   |-- 0_1_Introduction_and_Setup.ipynb
+|   |-- 0_2_Data_Curation_and_Formatting.ipynb
 |-- Part_1_Supervised_Finetuning_SFT
-|   |-- 01_SFT_with_TRL_and_LoRA.ipynb
-|   |-- 01b_SFT_for_Structured_Output_JSON.ipynb
-|   |-- 02_Full_Parameter_SFT_with_TRL.ipynb
-|   |-- 03_Faster_SFT_with_Unsloth.ipynb
+|   |-- 1_1_SFT_with_TRL_and_LoRA.ipynb
+|   |-- 1_2_SFT_for_Structured_Output_JSON.ipynb
+|   |-- 1_3_Full_Parameter_SFT_with_TRL.ipynb
+|   |-- 1_4_Faster_SFT_with_Unsloth.ipynb
 |-- Part_2_Preference_Alignment
-|   |-- 04_Aligning_with_DPO_using_TRL.ipynb
-|   |-- 05_Simplified_Alignment_with_ORPO.ipynb
-|   |-- 06_Advanced_RL_Alignment_with_GRPO.ipynb
+|   |-- 2_1_Aligning_with_DPO_using_TRL.ipynb
+|   |-- 2_2_Simplified_Alignment_with_ORPO.ipynb
+|   |-- 2_3_Advanced_RL_Alignment_with_GRPO.ipynb
 |-- Part_3_Advanced_Finetuning_with_Axolotl
-|   |-- 07_Reproducible_Finetuning_with_Axolotl.ipynb
-|   |-- 08_Continued_Pretraining_with_Axolotl.ipynb
+|   |-- 3_1_Reproducible_Finetuning_with_Axolotl.ipynb
+|   |-- 3_2_Continued_Pretraining_with_Axolotl.ipynb
 |-- Part_4_Quantization
-|   |-- 09_Post_Training_Quantization_for_GGUF_llama_cpp.ipynb
-|   |-- 10_Advanced_PTQ_with_AutoRound.ipynb
-|   |-- 11_Quantization_Aware_Training_QAT.ipynb
+|   |-- 4_1_Post_Training_Quantization_for_GGUF_llama_cpp.ipynb
+|   |-- 4_2_Advanced_PTQ_with_AutoRound.ipynb
+|   |-- 4_3_Quantization_Aware_Training_QAT.ipynb
 |-- Part_5_Deployment_with_vLLM
-|   |-- 12_Deploying_a_Merged_Model_with_vLLM.ipynb
-|   |-- 13_Deploying_with_LoRA_Adapters_vLLM.ipynb
-|   |-- 14_Deploying_Quantized_Models_vLLM.ipynb
+|   |-- 5_1_Deploying_a_Merged_Model_with_vLLM.ipynb
+|   |-- 5_2_Deploying_with_LoRA_Adapters_vLLM.ipynb
+|   |-- 5_3_Deploying_Quantized_Models_vLLM.ipynb
 |-- Part_6_Evaluation
-|   |-- 15_Benchmarking_with_LM_Evaluation_Harness.ipynb
+|   |-- 6_1_Benchmarking_with_LM_Evaluation_Harness.ipynb
 |-- Part_7_Advanced_Architectures
-|   |-- 16_Finetuning_a_Mixture_of_Experts_MoE.ipynb
-|   |-- 17_Finetuning_a_Vision_Language_Model_VLM.ipynb
-|   |-- 18_Merging_LoRA_Adapters.ipynb
+|   |-- 7_1_Finetuning_a_Mixture_of_Experts_MoE.ipynb
+|   |-- 7_2_Finetuning_a_Vision_Language_Model_VLM.ipynb
+|   |-- 7_3_Merging_LoRA_Adapters.ipynb
 |-- Appendix
 |   |-- Debugging.md
 |   |-- Common_Pitfalls.ipynb
@@ -61,7 +61,7 @@ The plan is designed to be modular and incremental. Each part builds on the last
 ### **Part 0: Introduction and Setup**
 *Get Started.*
 
-#### `00_Introduction_and_Setup.ipynb`
+#### `0_1_Introduction_and_Setup.ipynb`
 *   **Objective:** Set the stage for the series.
 *   **Content:**
     *   Overview of the cookbook structure.
@@ -70,7 +70,7 @@ The plan is designed to be modular and incremental. Each part builds on the last
     *   How to install core libraries (`transformers`, `torch`, `accelerate`, `bitsandbytes`).
     *   Setting up Hugging Face Hub credentials.
  
-#### `00b_Data_Curation_and_Formatting.ipynb`
+#### `0_2_Data_Curation_and_Formatting.ipynb`
 *   **Objective:** Data Curation & Formatting.
 *   **Content:**
     *  Sourcing Data: Show how to scrape a website, process a PDF, or use an API to get raw text.
@@ -84,7 +84,7 @@ The plan is designed to be modular and incremental. Each part builds on the last
 ### **Part 1: Supervised Finetuning (SFT)**
 *The foundation of adapting an LLM to a specific style or task.*
 
-#### `01_SFT_with_TRL_and_LoRA.ipynb`
+#### `1_1_SFT_with_TRL_and_LoRA.ipynb`
 *   **Objective:** Your first finetune. Learn the most common and resource-efficient method.
 *   **Key Concepts:** LoRA, PEFT, `SFTTrainer`, ChatML/Instruction formatting.
 *   **Steps:**
@@ -98,7 +98,7 @@ The plan is designed to be modular and incremental. Each part builds on the last
     8.  Perform inference with the adapter.
     9.  **Crucially:** Merge the LoRA adapter with the base model and save the final, merged model.
 
-#### `01b_SFT_for_Structured_Output_JSON.ipynb`
+#### `1_2_SFT_for_Structured_Output_JSON.ipynb`
 *   **Objective:** A huge number of real-world use cases aren't about chat; they're about getting reliable JSON or structured output.
 *   **Key Concepts:** Full finetuning vs. LoRA, resource requirements (VRAM, time).
 *   **Steps:**
@@ -107,7 +107,7 @@ The plan is designed to be modular and incremental. Each part builds on the last
     3.  Finetune a model on this data.
     4.  At inference time, show how to use techniques like JSON mode in vLLM or other libraries to guarantee valid JSON output.
 
-#### `02_Full_Parameter_SFT_with_TRL.ipynb`
+#### `1_3_Full_Parameter_SFT_with_TRL.ipynb`
 *   **Objective:** Understand the trade-offs of full finetuning.
 *   **Key Concepts:** Full finetuning vs. LoRA, resource requirements (VRAM, time).
 *   **Steps:**
@@ -117,7 +117,7 @@ The plan is designed to be modular and incremental. Each part builds on the last
     4.  Discuss the hardware needed (e.g., multiple A100s). Use DeepSpeed/FSDP for memory optimization.
     5.  Run the training (or a few steps of it) and compare results/resource usage with the LoRA version.
 
-#### `03_Faster_SFT_with_Unsloth.ipynb`
+#### `1_4_Faster_SFT_with_Unsloth.ipynb`
 *   **Objective:** Introduce a highly optimized framework for massive speed and memory improvements.
 *   **Key Concepts:** Unsloth's custom kernels, Triton language.
 *   **Steps:**
@@ -130,7 +130,7 @@ The plan is designed to be modular and incremental. Each part builds on the last
 ### **Part 2: Preference Alignment**
 *Teaching the model what humans prefer, moving beyond simple instruction-following.*
 
-#### `04_Aligning_with_DPO_using_TRL.ipynb`
+#### `2_1_Aligning_with_DPO_using_TRL.ipynb`
 *   **Objective:** Fine-tune a model based on preference pairs (chosen vs. rejected).
 *   **Key Concepts:** Preference tuning, DPO algorithm, preference dataset format (`prompt`, `chosen`, `rejected`).
 *   **Steps:**
@@ -141,7 +141,7 @@ The plan is designed to be modular and incremental. Each part builds on the last
     5.  Run the DPO training (can also be done with LoRA).
     6.  Show qualitative examples of how the model's responses change to be more helpful/less harmful.
 
-#### `05_Simplified_Alignment_with_ORPO.ipynb`
+#### `2_2_Simplified_Alignment_with_ORPO.ipynb`
 *   **Objective:** Showcase a newer, simpler alignment technique that combines SFT and preference tuning.
 *   **Key Concepts:** ORPO, combining instruction and preference loss.
 *   **Steps:**
@@ -150,7 +150,7 @@ The plan is designed to be modular and incremental. Each part builds on the last
     3.  Use the `ORPO` trainer from TRL.
     4.  Compare the simplicity and results with the two-stage SFT->DPO process.
 
-#### `06_Advanced_RL_Alignment_with_GRPO.ipynb`
+#### `2_3_Advanced_RL_Alignment_with_GRPO.ipynb`
 *   **Objective:** Introduce a cutting-edge method that can handle K-wise comparisons.
 *   **Key Concepts:** Reinforcement Learning with Verbalized Rewards (RLVR), k-wise preferences.
 *   **Steps:**
@@ -164,7 +164,7 @@ The plan is designed to be modular and incremental. Each part builds on the last
 ### **Part 3: Advanced Finetuning with Axolotl**
 *A powerful, configuration-driven framework for complex and reproducible pipelines.*
 
-#### `07_Reproducible_Finetuning_with_Axolotl.ipynb`
+#### `3_1_Reproducible_Finetuning_with_Axolotl.ipynb`
 *   **Objective:** Demonstrate how to manage complex finetuning pipelines using a single YAML config file.
 *   **Key Concepts:** YAML configuration, reproducibility, multi-dataset handling.
 *   **Steps:**
@@ -173,7 +173,7 @@ The plan is designed to be modular and incremental. Each part builds on the last
     3.  Create another YAML file that replicates the DPO training from Notebook 04.
     4.  Show how to mix datasets, use different LoRA types (like DoRA), and manage all hyperparameters from one place.
 
-#### `08_Continued_Pretraining_with_Axolotl.ipynb`
+#### `3_2_Continued_Pretraining_with_Axolotl.ipynb`
 *   **Objective:** Teach the model new knowledge by continuing the pre-training phase on new text data.
 *   **Key Concepts:** Continued pre-training vs. finetuning, causal language modeling objective.
 *   **Steps:**
@@ -187,7 +187,7 @@ The plan is designed to be modular and incremental. Each part builds on the last
 ### **Part 4: Quantization**
 *Making models smaller, faster, and more efficient for deployment.*
 
-#### `09_Post_Training_Quantization_for_GGUF_llama_cpp.ipynb`
+#### `4_1_Post_Training_Quantization_for_GGUF_llama_cpp.ipynb`
 *   **Objective:** Convert a trained model to the popular GGUF format for CPU and efficient GPU inference.
 *   **Key Concepts:** PTQ, GGUF, `llama.cpp`.
 *   **Steps:**
@@ -196,7 +196,7 @@ The plan is designed to be modular and incremental. Each part builds on the last
     3.  Show how to quantize to different levels (e.g., Q4_K_M, Q8_0) and explain the trade-offs.
     4.  Run inference with the quantized GGUF model using `llama-cpp-python`.
 
-#### `10_Advanced_PTQ_with_AutoRound.ipynb`
+#### `4_2_Advanced_PTQ_with_AutoRound.ipynb`
 *   **Objective:** Introduce a more sophisticated PTQ algorithm for better performance preservation.
 *   **Key Concepts:** AutoRound algorithm, preserving perplexity.
 *   **Steps:**
@@ -205,7 +205,7 @@ The plan is designed to be modular and incremental. Each part builds on the last
     3.  Use the `AutoRound` library to quantize a finetuned model to 4-bit.
     4.  Compare its performance (e.g., using perplexity) against a model quantized with a simpler method.
 
-#### `11_Quantization_Aware_Training_QAT.ipynb`
+#### `4_3_Quantization_Aware_Training_QAT.ipynb`
 *   **Objective:** Train a model that is "aware" it will be quantized, leading to higher accuracy.
 *   **Key Concepts:** QAT vs. PTQ, fake quantization during training.
 *   **Steps:**
@@ -219,7 +219,7 @@ The plan is designed to be modular and incremental. Each part builds on the last
 ### **Part 5: Deployment with vLLM**
 *Serving models for high-throughput, low-latency inference.*
 
-#### `12_Deploying_a_Merged_Model_with_vLLM.ipynb`
+#### `5_1_Deploying_a_Merged_Model_with_vLLM.ipynb`
 *   **Objective:** Serve a standard, full-precision finetuned model using vLLM.
 *   **Key Concepts:** PagedAttention, continuous batching, OpenAI-compatible API server.
 *   **Steps:**
@@ -228,7 +228,7 @@ The plan is designed to be modular and incremental. Each part builds on the last
     3.  Launch the vLLM API server.
     4.  Use `curl` or the `openai` Python library to send requests and benchmark throughput.
 
-#### `13_Deploying_with_LoRA_Adapters_vLLM.ipynb`
+#### `5_2_Deploying_with_LoRA_Adapters_vLLM.ipynb`
 *   **Objective:** Serve multiple LoRA adapters on a single base model for efficient multi-tenant deployment.
 *   **Key Concepts:** LoRARequest, multi-tenant serving.
 *   **Steps:**
@@ -237,7 +237,7 @@ The plan is designed to be modular and incremental. Each part builds on the last
     3.  Show how to make API requests, specifying which LoRA adapter to use for each request.
     4.  Explain the massive efficiency gain of this approach.
 
-#### `14_Deploying_Quantized_Models_vLLM.ipynb`
+#### `5_3_Deploying_Quantized_Models_vLLM.ipynb`
 *   **Objective:** Serve quantized models (e.g., AWQ, GPTQ) for even better performance.
 *   **Key Concepts:** vLLM's quantization support.
 *   **Steps:**
@@ -250,7 +250,7 @@ The plan is designed to be modular and incremental. Each part builds on the last
 ### **Part 6: Evaluation**
 *Quantitatively measuring if your finetuning was successful.*
 
-#### `15_Benchmarking_with_LM_Evaluation_Harness.ipynb`
+#### `6_1_Benchmarking_with_LM_Evaluation_Harness.ipynb`
 *   **Objective:** Evaluate your models on standard academic benchmarks.
 *   **Key Concepts:** MMLU, Arc, HellaSwag, TruthfulQA, evaluation metrics.
 *   **Steps:**
@@ -270,7 +270,7 @@ The plan is designed to be modular and incremental. Each part builds on the last
 ### **Part 7: Advanced Architectures**
 *Applying the cookbook's techniques to more complex models.*
 
-#### `16_Finetuning_a_Mixture_of_Experts_MoE.ipynb`
+#### `7_1_Finetuning_a_Mixture_of_Experts_MoE.ipynb`
 *   **Objective:** Adapt the finetuning process for MoE models like Mixtral.
 *   **Key Concepts:** MoE architecture, experts, routers, router loss.
 *   **Steps:**
@@ -281,7 +281,7 @@ The plan is designed to be modular and incremental. Each part builds on the last
         *   The importance of monitoring the router loss to prevent expert specialization collapse.
     4.  Use a framework like Unsloth or Axolotl, which have excellent support for MoE.
 
-#### `17_Finetuning_a_Vision_Language_Model_VLM.ipynb`
+#### `7_2_Finetuning_a_Vision_Language_Model_VLM.ipynb`
 *   **Objective:** Finetune a model like LLaVA to understand images and text.
 *   **Key Concepts:** VLM architecture, vision encoder, projector, multi-modal data.
 *   **Steps:**
@@ -292,7 +292,7 @@ The plan is designed to be modular and incremental. Each part builds on the last
         *   **Stage 2:** Unfreeze the LLM (or apply LoRA) and do an end-to-end SFT on vision-language instructions.
     4.  Use a library like LLaVA's official repo or a TRL example for VLM finetuning.
  
-#### `18_Merging_LoRA_Adapters.ipynb`
+#### `7_3_Merging_LoRA_Adapters.ipynb`
 *   **Objective:** Managing dozens of LoRA adapters is inefficient. What if you could combine them?
 *   **Steps:**
      1. Introduce the concept of merging adapters to create a single, multi-skilled model without full retraining.
